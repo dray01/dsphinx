@@ -15,16 +15,18 @@ More on Cloud Run here_.
 
 Now let's get started.
 I'll assume that you've signed up for your GCP account and are somewhat familiar with the UI.
+.. image:: '_static/cloud-run.png'
+    :align: right
 
 Objective
 ---------
 Build a documentation/blog site based on the Sphinx documentation generator. The site will automatically
 update content when it is committed to Git. 
 
-Software Used
+Software/Tools Used:
 
--  *Cloud Run*
--  *Cloud Build*
+-  *Cloud Run GCP Service*
+-  *Cloud Build GCP Service*
 -  *Github*
 -  *Sphinx*
 -  *Nginx*
