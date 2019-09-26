@@ -15,7 +15,8 @@ More on Cloud Run here_.
 
 Now let's get started.
 I'll assume that you've signed up for your GCP account and are somewhat familiar with the UI.
-.. image:: '_static/cloud-run.png'
+
+.. image:: _static/cloud-run.png
     :align: right
 
 Objective
