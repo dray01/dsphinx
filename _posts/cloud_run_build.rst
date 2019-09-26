@@ -36,7 +36,7 @@ Sphinx Documentation_.
 
 .. _Documentation: http://www.sphinx-doc.org/en/master/
 
-ReStructured Text DocumCheatsheet_
+ReStructured Text Cheatsheet_.
 
 .. _Cheatsheet: https://github.com/ralsina/rst-cheatsheet/blob/master/rst-cheatsheet.rst
 
