@@ -48,6 +48,7 @@ Steps
 .. code-block:: yaml
     :linenos:
     :emphasize-lines: 25-26
+
     FROM alpine:3.7
     LABEL description "Sphinx documentation tool"
 
