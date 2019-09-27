@@ -78,7 +78,7 @@ Below is a ``.yaml`` file that delares this process.
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
 
- 03. Putting it all together
+03. Putting it all together
 
 Now let's put it all together. We need to complete a couple of things here. First we need to clone a base repo that 
 includes all mainly the ``Dockerfile`` and the ``cloudbuild.yaml`` file.
