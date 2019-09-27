@@ -44,10 +44,15 @@ ReStructured Text Cheatsheet_.
 Steps
 ---------
 
+01. We need a docker file for our base image. There are a few lines of note.
+Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
+We then need to install some packages for sphinx and nginx.
+Following on from this the other line of note is `sphink-build` as this is the process that builds out out .html pages based on the .rst pages we contribute.
+Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
 .. code-block:: yaml
     :linenos:
-    :emphasize-lines: 25-26
+    :emphasize-lines: 1,9,26-27
 
     FROM alpine:3.7
     LABEL description "Sphinx documentation tool"
@@ -83,3 +88,4 @@ Steps
     COPY ./default.conf /etc/nginx/conf.d/
     EXPOSE 8080
     CMD ["nginx", "-g", "daemon off;"]
+
