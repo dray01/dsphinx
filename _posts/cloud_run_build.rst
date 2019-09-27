@@ -52,50 +52,16 @@ We then need to install some packages for sphinx and nginx.
 Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages we contribute.
 Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
-.. code-block:: yaml
+.. literalinclude:: ../Dockerfile
+   :language: yaml
     :linenos:
     :emphasize-lines: 1,9,26-27
-
-    FROM alpine:3.7
-    LABEL description "Sphinx documentation tool"
-
-    ENV SPHINX_DEFAULT_THEME sphinx_rtd_theme
-
-    # Sphinx-quickstart default value
-    ENV _SPHINX_DEFAULT_THEME sphinx_rtd_theme
-    ENV PORT=8080
-    RUN apk add --update --no-cache \
-            python3 \
-            py3-pip \
-            nginx \
-            make && \
-            pip3 install --upgrade pip && \
-            pip3 install sphinx sphinx_rtd_theme recommonmark && \
-            mkdir -p /usr/src/dcloud/_html && \
-            mkdir -p /run/nginx && \
-            touch /run/nginx/nginx.pid
-
-    #RUN mkdir -p /run/nginx
-    COPY . /usr/src/dcloud
-    WORKDIR /usr/src/dcloud
-
-    # RUN sed -i "s/${_SPHINX_DEFAULT_THEME}/${SPHINX_DEFAULT_THEME}/g" `find / -name conf.py_t`
-
-    #CMD sphinx-quickstart .
-    RUN sphinx-build -b html /usr/src/dcloud /usr/src/dcloud/_html
-    EXPOSE 8080
-    #CMD gunicorn -w 1 'sphinxserver:app(home="/usr/src/dcloud/_html")' -b 0.0.0.0:8080
-
-    ## Copy a new configuration file setting listen port to 8080
-    COPY ./default.conf /etc/nginx/conf.d/
-    EXPOSE 8080
-    CMD ["nginx", "-g", "daemon off;"]
 
 02. Build a Container image
 
 Next up, we need to take the above Dockerfile and build a Container image from it.
-Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .
-`` Note the ``.`` is the current working directory that will include the ``Dockerfile``
+Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
+Note the ``.`` is the current working directory that will include the ``Dockerfile``
 
 Now looking at this from an end to end process I would prefer to automate as much as possible. This brings us to *Cloud Build*.
 Let's call *Cloud Build* to build our Container image.
@@ -105,4 +71,4 @@ and finally deploy the image to *Cloud Run*.
 
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
-   
+
