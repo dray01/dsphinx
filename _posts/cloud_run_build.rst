@@ -44,9 +44,9 @@ ReStructured Text Cheatsheet_.
 Steps
 ---------
 
-01. A Dockerfile
+01. A Dockerfile to build an Image from
 
-We need a docker file for our base image. There are a few lines of note.
+We need a Dockerfile for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
 We then need to install some packages for sphinx and nginx.
 Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages we contribute.
@@ -57,7 +57,7 @@ Finally we copy our base configuration file for nginx then kickoff our web serve
     :linenos:
     :emphasize-lines: 1,9,26-27
 
-02. Build a Container image
+02. Build, Upload and Deploy the Container image to *Cloud Run*
 
 Next up, we need to take the above Dockerfile and build a Container image from it.
 Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
@@ -69,6 +69,13 @@ Let's call *Cloud Build* to build our Container image.
 Expanding on this, will look to utilise *Cloud Build* to not only build the Container image but take that image and upload it to *Cloud Registry* 
 and finally deploy the image to *Cloud Run*.
 
+Below is a ``.yaml`` file that delares this process. 
+
+-  Building the image
+-  Pushing the image to the *Cloud Registry*
+-  Deploying the image to *Cloud Run*
+
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
+
 
