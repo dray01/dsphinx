@@ -44,7 +44,7 @@ ReStructured Text Cheatsheet_.
 Steps
 ---------
 
-01. A Dockerfile to build an Image from
+01. The Dockerfile for Sphinx and NGINX
 
 We need a Dockerfile for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
@@ -54,8 +54,8 @@ Finally we copy our base configuration file for nginx then kickoff our web serve
 
 .. literalinclude:: ../Dockerfile
    :language: yaml
-    :linenos:
-    :emphasize-lines: 1,9,26-27
+   :emphasize-lines: 1,9,25-26
+   :linenos:
 
 02. Build, Upload and Deploy the Container image to *Cloud Run*
 
