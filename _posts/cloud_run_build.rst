@@ -44,10 +44,12 @@ ReStructured Text Cheatsheet_.
 Steps
 ---------
 
-01. We need a docker file for our base image. There are a few lines of note.
+01. A Dockerfile
+
+We need a docker file for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
 We then need to install some packages for sphinx and nginx.
-Following on from this the other line of note is `sphink-build` as this is the process that builds out out .html pages based on the .rst pages we contribute.
+Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages we contribute.
 Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
 .. code-block:: yaml
@@ -89,3 +91,18 @@ Finally we copy our base configuration file for nginx then kickoff our web serve
     EXPOSE 8080
     CMD ["nginx", "-g", "daemon off;"]
 
+02. Build a Container image
+
+Next up, we need to take the above Dockerfile and build a Container image from it.
+Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .
+`` Note the ``.`` is the current working directory that will include the ``Dockerfile``
+
+Now looking at this from an end to end process I would prefer to automate as much as possible. This brings us to *Cloud Build*.
+Let's call *Cloud Build* to build our Container image.
+
+Expanding on this, will look to utilise *Cloud Build* to not only build the Container image but take that image and upload it to *Cloud Registry* 
+and finally deploy the image to *Cloud Run*.
+
+.. literalinclude:: ../cloudbuild.yaml
+   :language: yaml
+   
