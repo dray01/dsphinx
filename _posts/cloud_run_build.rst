@@ -77,6 +77,7 @@ Below is a ``.yaml`` file that delares this process.
 
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
+   :linenos:
 
 03. Putting it all together
 
@@ -89,9 +90,9 @@ Create a new repo at Github_.
 
 .. _GitHub: https://github.com 
 
-Push the content you just cloned/editid up to the new repo on GitHub. (Atlassian has some great command references to help those not too familiar with git available _here.
+Push the content you just cloned/editid up to the new repo on GitHub. (Atlassian has some great command references to help those not too familiar with git available at Atlassian_.
 
-.. _here: https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
+.. _Atlassian: https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
 
 From there, you can make some edits or write new files inside the _posts/ directory.
 Also, if you do create new files then you will need to add them to the ``index.rst`` file to ensure they appear 
