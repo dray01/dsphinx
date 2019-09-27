@@ -19,7 +19,7 @@ I'll assume that you've signed up for your GCP account and are somewhat familiar
 Objective
 ---------
 Build a documentation/blog site based on the Sphinx documentation generator. The site will automatically
-update content when it is committed to Git. 
+update content when it is committed to Git. There are a couple of links below to help you get started with Sphinx and ``ReStructured Text``
 
 Software/Tools Used:
 
@@ -49,11 +49,11 @@ Steps
 We need a Dockerfile for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
 We then need to install some packages for sphinx and nginx.
-Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages we contribute.
+Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages that contain the content we want to share.
 Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
 .. literalinclude:: ../Dockerfile
-   :language: yaml
+   :language: dockerfile
    :emphasize-lines: 1,9,25-26
    :linenos:
 
