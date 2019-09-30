@@ -49,35 +49,42 @@ Steps
 We need a Dockerfile for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
 We then need to install some packages for sphinx and nginx.
-Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out .html pages based on the .rst pages that contain the content we want to share.
+Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out ``.html`` pages based on the .rst files that contain the sites content.
 Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
 .. literalinclude:: ../Dockerfile
    :language: dockerfile
-   :emphasize-lines: 1,9,24-25
+   :emphasize-lines: 1,9,25
    :linenos:
 
 02. Build the Container image using gcloud SDK.
 
 Next up, we need to take the above Dockerfile and build a Container image from it.
-Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
+Now the GCP SDK that can either be spun up in the cloud shell from the GCP console or installed localally via this guide_. 
+The SDK gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
 Note the ``.`` is the current working directory that will include the ``Dockerfile``
+
+.. _guide: https://cloud.google.com/sdk/install
 
 03. Push the image to the Container Registry in GCP
 
 Now that we've built the image, we need to upload/push it to GCP so we can deploy it in some way shape or form...
-To push an image via the cli DK we can use the following command ``gcloud docker -- push gcr.io/[PROJECT_ID]/[IMAGE_NAME]``.
+To push an image via the cli DK we can use the following command ``gcloud docker --push gcr.io/[PROJECT_ID]/[IMAGE_NAME]``.
 Note the project ID and image name variables.
 
 04. The fun bit... Deploying the image withs Cloud Run.
 
+The following guide shows a quickstart to build and run up a container in Cloud Run via the cli_.
+
+.. _cli: https://cloud.google.com/cloud-build/docs/quickstart-docker
+
 Now looking at this from an end to end process I would prefer to automate the process. This brings us to Cloud Build.
-Cloud Build let's us build and deploy our software in minutes. As a first timer to CLoud Build, I was surprised just how easy it was to consume!
+Cloud Build let's us build and deploy our software in minutes. As a first timer to Cloud Build, I was surprised just how easy it was to consume!
 
 We need Cloud Build to do 3 things for us when code is checked into git.
 
 -  Building the image
--  Pushing the image to the Cloud Registry
+-  Push the image to the Cloud Registry
 -  Deploying the image to Cloud Run
 
 Below is a ``.yaml`` file that delares this process. 
@@ -104,7 +111,7 @@ Create a new repo at Github_.
 
 .. _GitHub: https://github.com 
 
-Take a look with your favourite editor in the _posts directory and edit the .rst files as desired.
+Take a look with your favourite editor in the _posts directory and edit the ``.rst`` files as desired.
 
 You will need to make some edits to the ``cloudbuild.yaml`` file. Edit and update your image name and service name in the file. 
 Note the ``$PROJECT ID`` variable. 
@@ -128,13 +135,15 @@ Therefore we should see 2 new artifacts in GCP.
 Navigate to https://console.cloud.google.com -> Cloud Run | You should see a service with the defined service name.
 Click the hyperlink on the service name and the following page will provide a public URL to access the site.
 
-That just about does it.
+Click the link and make sure the page is up and running.
 
 Quick Win 
 ---------------
 
-Quick note, check out the ``README.md`` as part of the https://github.com/dray01/public-sphinx repo. There is a button to simply deploy the image to 
+Quick note, check out the ``README.md`` as part of the following repo_. There is a button to simply deploy the image to 
 Cloud Run! Kinda cool if you just want to click the button, log into GCP console and it will do the rest!
+
+.. _repo: https://github.com/dray01/public-sphinx
 
 More on the Cloud Run Button_.
 

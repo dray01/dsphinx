@@ -23,7 +23,6 @@ WORKDIR /usr/src/dcloud
 
 #CMD sphinx-quickstart .
 RUN sphinx-build -b html /usr/src/dcloud /usr/src/dcloud/_html
-EXPOSE 8080
 
 ## Copy a new configuration file setting listen port to 8080
 COPY ./default.conf /etc/nginx/conf.d/
