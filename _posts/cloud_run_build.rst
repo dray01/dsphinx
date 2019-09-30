@@ -75,6 +75,7 @@ Now looking at this from an end to end process I would prefer to automate the pr
 Cloud Build let's us build and deploy our software in minutes. As a first timer to CLoud Build, I was surprised just how easy it was to consume!
 
 We need Cloud Build to do 3 things for us when code is checked into git.
+
 -  Building the image
 -  Pushing the image to the Cloud Registry
 -  Deploying the image to Cloud Run
