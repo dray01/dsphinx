@@ -1,5 +1,5 @@
 ======================================
-Post 01. Geting Started with Cloud Run
+Geting Started with Cloud Run
 ======================================
 
 What is Cloud Run I hear you ask? Cloud Run is obviously part of GCP. I like to think of it
