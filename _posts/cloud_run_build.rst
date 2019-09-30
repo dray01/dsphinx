@@ -57,29 +57,37 @@ Finally we copy our base configuration file for nginx then kickoff our web serve
    :emphasize-lines: 1,9,24-25
    :linenos:
 
-02. Build, Upload and Deploy the Container image to Cloud Run
+02. Build the Container image using gcloud SDK.
 
 Next up, we need to take the above Dockerfile and build a Container image from it.
 Now the GCP SDK called "gcloud" gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
 Note the ``.`` is the current working directory that will include the ``Dockerfile``
 
+03. Push the image to the Container Registry in GCP
+
+Now that we've built the image, we need to upload/push it to GCP so we can deploy it in some way shape or form...
+To push an image via the cli DK we can use the following command ``gcloud docker -- push gcr.io/[PROJECT_ID]/[IMAGE_NAME]``.
+Note the project ID and image name variables.
+
+04. The fun bit... Deploying the image withs Cloud Run.
+
 Now looking at this from an end to end process I would prefer to automate the process. This brings us to Cloud Build.
-ClLet's call Cloud Build to build our Container image.
+Cloud Build let's us build and deploy our software in minutes. As a first timer to CLoud Build, I was surprised just how easy it was to consume!
 
-Expanding on this, will look to utilise Cloud Build to not only build the Container image but take that image and upload it to Cloud Registry 
-and finally deploy the image to Cloud Run.
-
-Below is a ``.yaml`` file that delares this process. 
-
+We need Cloud Build to do 3 things for us when code is checked into git.
 -  Building the image
 -  Pushing the image to the Cloud Registry
 -  Deploying the image to Cloud Run
+
+Below is a ``.yaml`` file that delares this process. 
 
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
    :linenos:
 
-03. Putting it all together
+The last thing we need to do is link Cloud Build to your GitHub repo to trigger a new build when a new commit is pushed.
+
+05. Putting it all together
 
 Now let's put it all together. We need to complete a couple of things here. First we need to clone a base repo that 
 includes all mainly the ``Dockerfile`` and the ``cloudbuild.yaml`` file.
