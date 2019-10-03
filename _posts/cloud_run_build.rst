@@ -48,8 +48,12 @@ Steps
 
 We need a Dockerfile for our base image. There are a few lines of note.
 Personally, I like to use Alpine as it's light weight and has a wide variety of packages available.
+More information on Alpine_.
+
+.. _Alpine: https://alpinelinux.org/
+
 We then need to install some packages for sphinx and nginx.
-Following on from this the other line of note is ``sphink-build`` as this is the process that builds out out ``.html`` pages based on the .rst files that contain the sites content.
+Following on from this the other line of note is ``sphinx-build`` as this is the process that builds out out ``.html`` pages based on the .rst files that contain the sites content.
 Finally we copy our base configuration file for nginx then kickoff our web server instance of nginx to load the _html directory of sphinx.
 
 .. literalinclude:: ../Dockerfile
@@ -60,7 +64,7 @@ Finally we copy our base configuration file for nginx then kickoff our web serve
 02. Build the Container image using gcloud SDK.
 
 Next up, we need to take the above Dockerfile and build a Container image from it.
-Now the GCP SDK that can either be spun up in the cloud shell from the GCP console or installed localally via this guide_. 
+Now the GCP SDK that can either be spun up in the cloud shell from the GCP console or instfalled locally via this guide_. 
 The SDK gives us some cli options such as ``gcloud build --tag gcr.io/[PROJECT_ID]/[IMAGE_NAME] .`` 
 Note the ``.`` is the current working directory that will include the ``Dockerfile``
 
@@ -72,14 +76,14 @@ Now that we've built the image, we need to upload/push it to GCP so we can deplo
 To push an image via the cli DK we can use the following command ``gcloud docker --push gcr.io/[PROJECT_ID]/[IMAGE_NAME]``.
 Note the project ID and image name variables.
 
-04. The fun bit... Deploying the image withs Cloud Run.
+04. The fun bit... Deploying the image with Cloud Run.
 
 The following guide shows a quickstart to build and run up a container in Cloud Run via the cli_.
 
 .. _cli: https://cloud.google.com/cloud-build/docs/quickstart-docker
 
 Now looking at this from an end to end process I would prefer to automate the process. This brings us to Cloud Build.
-Cloud Build let's us build and deploy our software in minutes. As a first timer to Cloud Build, I was surprised just how easy it was to consume!
+Cloud Build lets us build and deploy our software in minutes. As a first timer to Cloud Build, I was surprised just how easy it was to consume!
 
 We need Cloud Build to do 3 things for us when code is checked into git.
 
@@ -87,7 +91,7 @@ We need Cloud Build to do 3 things for us when code is checked into git.
 -  Push the image to the Cloud Registry
 -  Deploying the image to Cloud Run
 
-Below is a ``.yaml`` file that delares this process. 
+Below is a ``.yaml`` file that declares this process. 
 
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
@@ -117,7 +121,7 @@ You will need to make some edits to the ``cloudbuild.yaml`` file. Edit and updat
 Note the ``$PROJECT ID`` variable. 
 This assumes that you have set the default project with the GCP SDK. You can set this with the following command: ``gcloud config set project my-project``
 
-Push the content you just cloned/editid up to the new repo on GitHub. 
+Push the content you just cloned/edited up to the new repo on GitHub. 
 From within the working directory that includes the Dockerfile etc ``git add . && git commit -m "First Push" && git push origin master``
 (Atlassian has some great command references to help those not too familiar with git available at Atlassian_.
 
