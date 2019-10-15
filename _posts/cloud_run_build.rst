@@ -91,7 +91,12 @@ We need Cloud Build to do 3 things for us when code is checked into git.
 -  Push the image to the Cloud Registry
 -  Deploying the image to Cloud Run
 
-Below is a ``.yaml`` file that declares this process. 
+Below is a ``.yaml`` file that declares this process.
+
+.. note:: 
+   We need to set permissions to enable Cloud Build to deploy to Cloud Run. See below permissions_ guide.
+   .. _permissions: https://cloud.google.com/cloud-build/docs/configuring-builds/build-test-deploy-artifacts
+
 
 .. literalinclude:: ../cloudbuild.yaml
    :language: yaml
