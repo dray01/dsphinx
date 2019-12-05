@@ -83,7 +83,9 @@ The following guide shows a quickstart to build and run up a container in Cloud 
 .. _cli: https://cloud.google.com/cloud-build/docs/quickstart-docker
 
 Now looking at this from an end to end process I would prefer to automate the process. This brings us to Cloud Build.
-Cloud Build lets us build and deploy our software in minutes. As a first timer to Cloud Build, I was surprised just how easy it was to consume!
+Cloud Build lets us build and deploy our software in minutes. As a first timer to Cloud Build, I was surprised just how easy it was to consume! More information available on Cloud_Build_.
+
+.. _Cloud_Build: https://cloud.google.com/cloud-build
 
 We need Cloud Build to do 3 things for us when code is checked into git.
 
@@ -116,9 +118,9 @@ includes all the needed files.
 The following instructions will differ depending on your own personal workflow/OS/machine etc.
 From a terminal in your new working dir run ``git clone git@github.com:dray01/public-sphinx.git``
 
-Create a new repo at Github_.
+More information on managing repositories available at the Github_ help portal.
 
-.. _GitHub: https://github.com 
+.. _GitHub: https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github
 
 Take a look with your favourite editor in the _posts directory and edit the ``.rst`` files as desired.
 

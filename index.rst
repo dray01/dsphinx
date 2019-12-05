@@ -30,10 +30,11 @@ Feel free to sign up and check out some of the amazing services available.
 
 Login to the `Google Cloud Platform <https://console.cloud.google.com>`_ to get started.
 
+.. image:: _images/google_dc.jpeg
+    :align: center
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. Indices and tables
+  ==================
+  * :ref:`genindex`
+  * :ref:`modindex`
+  * :ref:`search`
