@@ -76,6 +76,9 @@ Now that we've built the image, we need to upload/push it to GCP so we can deplo
 To push an image via the cli DK we can use the following command ``gcloud docker --push gcr.io/[PROJECT_ID]/[IMAGE_NAME]``.
 Note the project ID and image name variables.
 
+.. image:: _images/registry.png
+    :align: right
+
 04. The fun bit... Deploying the image with Cloud Run.
 
 The following guide shows a quickstart to build and run up a container in Cloud Run via the cli_.
@@ -104,11 +107,17 @@ Below is a ``.yaml`` file that declares this process.
    :language: yaml
    :linenos:
 
+.. image:: _images/cbuild.png
+    :align: right
+
 The last thing we need to do is link Cloud Build to your GitHub repo to trigger a new build when a new commit is pushed.
 
 Follow the guide on connecting Cloud Build to Git with triggers_.
 
 .. _triggers: https://cloud.google.com/cloud-build/docs/create-github-app-triggers
+
+.. image:: _images/triggers.png
+    :align: right
 
 05. Putting it all together
 
@@ -152,8 +161,7 @@ Quick Win
 ---------------
 
 Quick note, check out the ``README.md`` as part of the following repo_. There is a button to simply deploy the image to 
-Cloud Run! Kinda cool if you just want to click the button, log into GCP console and it will do the rest!
-
+,
 .. _repo: https://github.com/dray01/public-sphinx
 
 More on the Cloud Run Button_.

@@ -30,7 +30,7 @@ Feel free to sign up and check out some of the amazing services available.
 
 Login to the `Google Cloud Platform <https://console.cloud.google.com>`_ to get started.
 
-.. image:: _images/google_dc.jpeg
+.. image:: _posts/_images/google_dc.jpeg
     :align: center
 
 .. Indices and tables
