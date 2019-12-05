@@ -3,12 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to dcloud!
+Welcome to cloudbits!
 ==================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Dcloud:
+   :caption: cloudbits:
 
 .. toctree::
    :maxdepth: 2
