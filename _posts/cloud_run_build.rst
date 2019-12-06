@@ -4,7 +4,13 @@ Geting Started with Cloud Run
 
 What is Cloud Run I hear you ask? Cloud Run is obviously part of GCP. I like to think of it
 as a kind of new look at both serverless functions and kubernetes. Basically it combines some
-of the princples of both into one service. 
+of the princples of both into one service. It's a great platform for hosting stateless services built for kubernetes. It takes away all of the overhead and management of a Kubernetes platform. 
+If you're interested Cloud Run is built on top of Knative. Refer to the Knative_ site and Google_ who is a leading contributer for more information.
+
+.. _Knative: https://knative.dev/
+
+.. _Google: https://cloud.google.com/knative/
+
 For this purposes of this post I thought it would be kind of neat to build this very site in Cloud Run.
 The obvious and easier alternative would be to utilise Google Cloud Storage with static HTML hosting with a Cloud Build hook into Git. 
 Serverless with Kubernetes is just a little more interesting to me...
