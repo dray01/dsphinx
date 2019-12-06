@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'dcloud'
+project = 'cloudbits'
 copyright = '2019, Brett Drayton'
 author = 'Brett Drayton'
 
