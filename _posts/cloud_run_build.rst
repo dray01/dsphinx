@@ -166,8 +166,8 @@ Click the link and make sure the page is up and running.
 Quick Win 
 ---------------
 
-Quick note, check out the ``README.md`` as part of the following repo_. There is a button to simply deploy the image to 
-,
+Quick note, check out the ``README.md`` as part of the following repo_. There is a button to simply deploy the image to GCP Cloud Run. Simply click the button and log into your GCP instance.
+
 .. _repo: https://github.com/dray01/public-sphinx
 
 More on the Cloud Run Button_.
