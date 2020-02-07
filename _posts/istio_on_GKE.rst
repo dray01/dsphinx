@@ -23,10 +23,21 @@ Steps
 
 .. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
 
-02. Enable the Cloud Shell
+02. Activate the Cloud Shell
+
+From the GCP console ensure that you have your project selected. Then you can select the below icon to 
+activate Cloud Shell
+
+.. image:: _images/cloud-shell.png
+    :align: left
+
+Then you will see a terminal window open up at the bottom of your console tab.
+
+
 
 03. Once you have this up and running we need to enable access to a few API's in GCP.
 
-.. literalinclude:: ../cloudbuild.yaml
-   :language: yaml
+.. literalinclude:: ../code_snippets/cloud_shell.txt
+   :language: sh
    :linenos:
+
