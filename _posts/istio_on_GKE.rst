@@ -57,9 +57,20 @@ or, you can enter the below into your cloud-shell session.
 
 03. Once you have this up and running we need to enable access to a few API's in GCP.
 
-.. literalinclude:: ../code_snippets/cloud_shell.txt
-   :language: bash
-   :linenos:
+.. code-block:: bash
+
+    gcloud services enable \
+        cloudresourcemanager.googleapis.com \
+        container.googleapis.com \
+        containeranalysis.googleapis.com \
+        binaryauthorization.googleapis.com \
+        gkeconnect.googleapis.com \
+        gkehub.googleapis.com \
+        serviceusage.googleapis.com \
+        sourcerepo.googleapis.com \
+        iamcredentials.googleapis.com \
+        contextgraph.googleapis.com \
+        stackdriver.googleapis.com
 
 04. 
 
