@@ -16,6 +16,7 @@ Welcome to cloudbits!
    :hidden:
 
    _posts/cloud_run_build.rst
+   _posts/my_second_post.rst
 
 The Site....
 ===============
