@@ -34,10 +34,9 @@ activate Cloud Shell
 Then you will see a terminal window open up at the bottom of your console tab.
 
 
-
 03. Once you have this up and running we need to enable access to a few API's in GCP.
 
 .. literalinclude:: ../code_snippets/cloud_shell.txt
-   :language: sh
+   :language: bash
    :linenos:
 
