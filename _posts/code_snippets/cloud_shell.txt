@@ -1,0 +1,12 @@
+gcloud services enable \
+    cloudresourcemanager.googleapis.com \
+    container.googleapis.com \
+    containeranalysis.googleapis.com \
+    binaryauthorization.googleapis.com \
+    gkeconnect.googleapis.com \
+    gkehub.googleapis.com \
+    serviceusage.googleapis.com \
+    sourcerepo.googleapis.com \
+    iamcredentials.googleapis.com \
+    contextgraph.googleapis.com \
+    stackdriver.googleapis.com
