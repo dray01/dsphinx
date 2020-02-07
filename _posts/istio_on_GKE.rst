@@ -41,7 +41,7 @@ or, you can enter the below into your cloud-shell session.
 
     gcloud compute networks subnets update default \
         --region australia-southeast1 \
-        --add-secondary-ranges pods=10.56.0.0/14 
+        --add-secondary-ranges pods=10.60.0.0/14 
 
     gcloud beta container clusters create istio-cluster --zone \
         australia-southeast1 \
@@ -72,6 +72,69 @@ or, you can enter the below into your cloud-shell session.
         contextgraph.googleapis.com \
         stackdriver.googleapis.com
 
-04. 
+04. Download and prepare to deploy Istio to the new cluster.
+
+.. code-block:: bash
+
+    curl -L https://istio.io/downloadIstio | sh -
+
+.. code-block:: bash
+
+    cd istio-1.4.3
+
+.. code-block:: bash
+
+    export PATH=$PWD/bin:$PATH
+
+These instructions are taken from Istio's site_
+
+.. _site: https://istio.io/docs/setup/getting-started/
+
+Note: ``Current latest version is 1.4.3.`` 
+
+05. Create an alias using kubectx to make it easier to refer to the istio cluster
+
+.. code-block:: bash
+    GCP_PROJECT=$(gcloud config list --format "value(core.project)")
+    kubectx istio-cluster=gke_${GCP_PROJECT}_australia-southeast1_istio-cluster
+
+06. The cluster we just provisioned uses Workload Identity for authenticating with GCP Services. 
+This provides an improved security posture for when applications running into GKE need to connect to GCP Services. 
+The application we will be deploying later will be shipping traces to Stackdriver. 
+Run the following commands to configure Workload Identity for the default namespace that we’ll be 
+running our application in.  
+
+.. code-block:: bash
+
+    gcloud iam service-accounts create microservices-demo
+    gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:microservices-demo@${GCP_PROJECT}.iam.gserviceaccount.com \
+    --role=roles/cloudtrace.agent
+
+    gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:microservices-demo@${GCP_PROJECT}.iam.gserviceaccount.com \
+    --role=roles/cloudprofiler.agent
+
+    gcloud iam service-accounts add-iam-policy-binding \
+    --role roles/iam.workloadIdentityUser \
+    --member "serviceAccount:${GCP_PROJECT}.svc.id.goog[default/default]" \
+    microservices-demo@${GCP_PROJECT}.iam.gserviceaccount.com
+
+    kubectl annotate serviceaccount \
+    --namespace default \
+    default \
+    iam.gke.io/gcp-service-account=microservices-demo@${GCP_PROJECT}.iam.gserviceaccount.com
+
+07. Deploy Istio to the new cluster and define your profile.
+
+Firstly, we'll be deploying the ``Demo`` profile as it meets my needs. At a high level a pofile 
+is a pre-built definition of what features get enabled.
+More information on Istio profiles is available here_.
+
+.. _here: https://istio.io/docs/setup/additional-setup/config-profiles/
+
+.. code-block:: bash
+
+    istioctl manifest apply --set profile=demo
 
 
