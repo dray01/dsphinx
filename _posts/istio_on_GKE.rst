@@ -19,11 +19,7 @@ Here is a guide to getting your first GKE_ cluster up and running.
 Steps
 ---------
 
-01. Here is a guide to getting your first GKE_ cluster up and running.
-
-.. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
-
-02. Activate the Cloud Shell
+01. Activate the Cloud Shell
 
 From the GCP console ensure that you have your project selected. Then you can select the below icon to 
 activate Cloud Shell
@@ -33,10 +29,38 @@ activate Cloud Shell
 
 Then you will see a terminal window open up at the bottom of your console tab.
 
+02. Here is a guide to getting your first GKE_ cluster up and running.
+
+.. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
+or, you can enter the below into your cloud-shell session.
+
+.. code-block:: bash
+
+    GCP_PROJECT=$(gcloud config list --format "value(core.project)")
+    export IDNS=${GCP_PROJECT}.svc.id.goog
+
+    gcloud compute networks subnets update default \
+        --region australia-southeast1 \
+        --add-secondary-ranges pods=10.56.0.0/14 
+
+    gcloud beta container clusters create istio-cluster --zone \
+        australia-southeast1 \
+        --enable-ip-alias \
+        --machine-type n1-standard-4 \
+        --identity-namespace=${IDNS} \
+        --enable-stackdriver-kubernetes \
+        --subnetwork=default \
+        --cluster-secondary-range-name=pods \
+        --services-ipv4-cidr=10.120.0.0/20 \
+        --labels csm=
+
 
 03. Once you have this up and running we need to enable access to a few API's in GCP.
 
 .. literalinclude:: ../code_snippets/cloud_shell.txt
    :language: bash
    :linenos:
+
+04. 
+
 
