@@ -2,13 +2,14 @@
 Installing Istio Service Mesh on GKE.
 ======================================
 
+.. image:: _images/istio.png
+    :align: left
+    :width: 400
+
 Over the past few years we've been hearing and talking about a Service Mesh. To me this technology 
 certainly can solve many problems in both digitel natives and traditional enterprise shops. I'm very much
 enjoying watching the SM space mature and really form a value statement that many architects I speak to are looking for.
 
-.. image:: _images/istio.png
-    :align: left
-    :width: 400
 
 Objective
 ---------
