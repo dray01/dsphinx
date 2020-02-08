@@ -7,7 +7,8 @@ certainly can solve many problems in both digitel natives and traditional enterp
 enjoying watching the SM space mature and really form a value statement that many architects I speak to are looking for.
 
 .. image:: _images/istio.png
-    :align: right
+    :align: left
+    :width: 400
 
 Objective
 ---------
