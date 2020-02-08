@@ -4,13 +4,16 @@ Installing Istio Service Mesh on GKE.
 
 Over the past few years we've been hearing and talking about a Service Mesh. To me this technology 
 certainly can solve many problems in both digitel natives and traditional enterprise shops. I'm very much
-enjoying watch the SM space mature and really form a value statement that many architects I speak to are looking for.
+enjoying watching the SM space mature and really form a value statement that many architects I speak to are looking for.
+
+.. image:: _images/istio.png
+    :align: right
 
 Objective
 ---------
 The intent of this post is to share the installation process to get the OSS version of Istio Service Mesh 
-configured on our GKE cluster. The follow up to this is it's a bit of a prep for the upcomign GA release of Anthos 
-SM which will bring a managed SM offering to Google's Hybrid/multi cloud solutions.
+configured on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
+ASM will provide the capability to build your mesh across many clusters and clouds.
 
 Here is a guide to getting your first GKE_ cluster up and running.
 
