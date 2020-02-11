@@ -147,7 +147,7 @@ More information on Istio profiles is available here_.
 
     istioctl manifest apply --set profile=demo \
     --set values.global.mtls.auto=true  \
-    --set values.global.mtls.enabled=false
+    --set values.global.mtls.enabled=false 
 
 This tasks shows a simplified workflow for mutual TLS adoption as per Istio documentation_
 
@@ -164,4 +164,37 @@ I'll create a demo namespace for the purposes of this post.
     kubectl create namespace demo
     kubectl label namespace demo istio-injection=enabled
 
+09. Deploy Hipster Shop Demo application
+
+For this example we will be making use of self-signed certs as part of the deployment. Also, we will be following the 
+guide from Google's git_ page.
+
+.. _git: https://github.com/GoogleCloudPlatform/microservices-demo
+
+As per below we will clone the hipster app repo, enable the Google Container Registry and auth GCR with docker.
+
+.. code-block:: bash
+    git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
+    cd microservices-demo
+    gcloud services enable containerregistry.googleapis.com
+    gcloud auth configure-docker -q
+
+We'll be using Skaffold to help deploy hipster shop to GKE. Skaffold is a command line tool that facilitates continuous development for Kubernetes applications
+More information available at here_.
+
+.. _here: https://github.com/GoogleContainerTools/skaffold
+
+.. code-block:: bash
+    skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]
+
+The above code will build the images, tag these images, push to GCR and deploy the hipster shop images to GKE.
+
+We should see all of our pods running with the below command. Take note we should see 2/2 underneath "ready". This indicates that Envoy has been deployed.
+
+.. code-block:: bash
+    kubectl get pods -n demo
+
+.. image:: _images/k-get-pods.png
+    :align: left
+    :width: 300
 
