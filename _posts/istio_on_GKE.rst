@@ -7,14 +7,19 @@ Installing Istio Service Mesh on GKE.
     :width: 400
 
 Over the past few years we've been hearing and talking about a Service Mesh. To me this technology 
-certainly can solve many problems in both digitel natives and traditional enterprise shops. I'm very much
-enjoying watching the SM space mature and really form a value statement that many architects I speak to are looking for.
+certainly can solve many problems in both digitel natives and traditional enterprise alike. I'm very much
+enjoying watching the SM space mature and really form a value statement that many architects I speak to are
+looking for. If we say that kubernetes has won. Then we will continue to see larger/more complex kubernetes 
+deployments which will further drive the need for a Service Mesh.
+At a high level there are a few capabilities a Service Mesh will provide. 
+Offload certificate mangement (mTLS) from the developers.
+Provide the SRE/Ops teams with insight into service performance/latency and to further abstract services from the network.
 
 
 Objective
 ---------
 The intent of this post is to share the installation process to get the OSS version of Istio Service Mesh 
-configured on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
+on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
 ASM will provide the capability to build your mesh across many clusters and clouds.
 
 Here is a guide to getting your first GKE_ cluster up and running.
@@ -140,6 +145,23 @@ More information on Istio profiles is available here_.
 
 .. code-block:: bash
 
-    istioctl manifest apply --set profile=demo
+    istioctl manifest apply --set profile=demo \
+    --set values.global.mtls.auto=true  \
+    --set values.global.mtls.enabled=false
+
+This tasks shows a simplified workflow for mutual TLS adoption as per Istio documentation_
+
+.. _documentation: https://istio.io/docs/tasks/security/authentication/auto-mtls/
+
+With Istio auto mutual TLS feature, you can adopt mutual TLS by only configuring authentication policy 
+without worrying about destination rule.
+
+08. Enable Istio injection to your namespace.
+
+I'll create a demo namespace for the purposes of this post.
+
+.. code-block:: bash
+    kubectl create namespace demo
+    kubectl label namespace demo istio-injection=enabled
 
 
