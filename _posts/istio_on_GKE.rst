@@ -197,6 +197,5 @@ We should see all of our pods running with the below command. Take note we shoul
 
 
 .. image:: _images/k-get-pods.png
-    :align: middle
     :width: 400
 
