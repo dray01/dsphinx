@@ -180,7 +180,7 @@ As per below we will clone the hipster app repo, enable the Google Container Reg
     gcloud auth configure-docker -q
 
 We'll be using Skaffold to help deploy hipster shop to GKE. Skaffold is a command line tool that facilitates continuous development for Kubernetes applications
-More information available at here_.
+More information available at here_
 
 .. _here: https://github.com/GoogleContainerTools/skaffold
 
@@ -194,7 +194,8 @@ We should see all of our pods running with the below command. Take note we shoul
 .. code-block:: bash
     kubectl get pods -n demo
 
+
 .. image:: _images/k-get-pods.png
     :align: left
-    :width: 300
+    :width: 400
 
