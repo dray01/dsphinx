@@ -161,6 +161,7 @@ without worrying about destination rule.
 I'll create a demo namespace for the purposes of this post.
 
 .. code-block:: bash
+
     kubectl create namespace demo
     kubectl label namespace demo istio-injection=enabled
 
@@ -174,6 +175,7 @@ guide from Google's git_ page.
 As per below we will clone the hipster app repo, enable the Google Container Registry and auth GCR with docker.
 
 .. code-block:: bash
+
     git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
     cd microservices-demo
     gcloud services enable containerregistry.googleapis.com
@@ -185,6 +187,7 @@ More information available at here_
 .. _here: https://github.com/GoogleContainerTools/skaffold
 
 .. code-block:: bash
+
     skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]
 
 The above code will build the images, tag these images, push to GCR and deploy the hipster shop images to GKE.
@@ -192,6 +195,7 @@ The above code will build the images, tag these images, push to GCR and deploy t
 We should see all of our pods running with the below command. Take note we should see 2/2 underneath "ready". This indicates that Envoy has been deployed.
 
 .. code-block:: bash
+
     kubectl get pods -n demo
 
 
