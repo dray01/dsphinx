@@ -22,9 +22,6 @@ The intent of this post is to share the installation process to get the OSS vers
 on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
 ASM will provide the capability to build your mesh across many clusters and clouds.
 
-Here is a guide to getting your first GKE_ cluster up and running.
-
-.. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
 
 Steps
 ---------
@@ -139,9 +136,9 @@ running our application in.
 
 Firstly, we'll be deploying the ``Demo`` profile as it meets my needs. At a high level a pofile 
 is a pre-built definition of what features get enabled.
-More information on Istio profiles is available here_.
+More information on Istio profiles is available on the Istio_ site.
 
-.. _here: https://istio.io/docs/setup/additional-setup/config-profiles/
+.. _Istio: https://istio.io/docs/setup/additional-setup/config-profiles/
 
 .. code-block:: bash
 
@@ -200,6 +197,6 @@ We should see all of our pods running with the below command. Take note we shoul
 
 
 .. image:: _images/k-get-pods.png
-    :align: left
+    :align: middle
     :width: 400
 
