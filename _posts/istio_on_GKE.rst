@@ -26,7 +26,7 @@ ASM will provide the capability to build your mesh across many clusters and clou
 Steps
 ---------
 
-01. Activate the Cloud Shell
+**01. Activate the Cloud Shell**
 
 From the GCP console ensure that you have your project selected. Then you can select the below icon to 
 activate Cloud Shell
@@ -36,7 +36,7 @@ activate Cloud Shell
 
 Then you will see a terminal window open up at the bottom of your console tab.
 
-02. Here is a guide to getting your first GKE_ cluster up and running.
+**02. Here is a guide to getting your first GKE_ cluster up and running**
 
 .. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
 or, you can enter the below into your cloud-shell session.
@@ -63,7 +63,7 @@ or, you can enter the below into your cloud-shell session.
         --max-nodes=3
 
 
-03. Once you have this up and running we need to enable access to a few API's in GCP.
+**03. Once you have this up and running we need to enable access to a few API's in GCP**
 
 .. code-block:: bash
 
@@ -80,7 +80,7 @@ or, you can enter the below into your cloud-shell session.
         contextgraph.googleapis.com \
         stackdriver.googleapis.com
 
-04. Download and prepare to deploy Istio to the new cluster.
+**04. Download and prepare to deploy Istio to the new cluster**
 
 .. code-block:: bash
 
@@ -100,13 +100,14 @@ These instructions are taken from Istio's site_
 
 Note: ``Current latest version is 1.4.3.`` 
 
-05. Create an alias using kubectx to make it easier to refer to the istio cluster
+**05. Create an alias using kubectx to make it easier to refer to the istio cluster**
 
 .. code-block:: bash
     GCP_PROJECT=$(gcloud config list --format "value(core.project)")
     kubectx istio-cluster=gke_${GCP_PROJECT}_australia-southeast1_istio-cluster
 
-06. The cluster we just provisioned uses Workload Identity for authenticating with GCP Services. 
+**06. The cluster we just provisioned uses Workload Identity for authenticating with GCP Services**
+
 This provides an improved security posture for when applications running into GKE need to connect to GCP Services. 
 The application we will be deploying later will be shipping traces to Stackdriver. 
 Run the following commands to configure Workload Identity for the default namespace that we’ll be 
@@ -133,7 +134,7 @@ running our application in.
     default \
     iam.gke.io/gcp-service-account=microservices-demo@${GCP_PROJECT}.iam.gserviceaccount.com
 
-07. Deploy Istio to the new cluster and define your profile.
+**07. Deploy Istio to the new cluster and define your profile**
 
 Firstly, we'll be deploying the ``Demo`` profile as it meets my needs. At a high level a pofile 
 is a pre-built definition of what features get enabled.
@@ -154,13 +155,13 @@ This tasks shows a simplified workflow for mutual TLS adoption as per Istio docu
 With Istio auto mutual TLS feature, you can adopt mutual TLS by only configuring authentication policy 
 without worrying about destination rule.
 
-08. Enable Istio injection to your namespace.
+**08. Enable Istio injection to your namespace**
 
 .. code-block:: bash
 
     kubectl label namespace default istio-injection=enabled
 
-09. Deploy Hipster Shop Demo application
+**09. Deploy Hipster Shop Demo application**
 
 For this example we will be making use of self-signed certs as part of the deployment. Also, we will be following the 
 guide from Google's git_ page.
@@ -183,7 +184,7 @@ More information available at here_
 
 .. code-block:: bash
 
-    skaffold run -n demo -p gcb --default-repo=gcr.io/[PROJECT_ID]
+    skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]
 
 The above code will build the images, tag these images, push to GCR and deploy the hipster shop images to GKE.
 
@@ -210,7 +211,7 @@ Take a look got the ``LoadBalancer`` IP next to the ``frontend-external`` servic
 You will be able to browse to this IP and access the shopfront. (assuming you're working with GKE and not a local environment with NodePort etc)
 This is not however making use of Isio's ingress capabilities.
 
-Now let's enable Istio for Ingress.
+**10. Enable Istio for Ingress on our new Hipster Shop application**
 
 .. code-block:: bash
 
@@ -231,7 +232,7 @@ For my learnings I will focuss on the later.
 
 Therefore we need to enable Istio Telemetry. This will help us understand two key things regarding application. Security and health. Pretty important right!
 
-10. Enable Mixer to share Telemety data to Stackdriver.
+**11. Enable Mixer to share Telemety data to Stackdriver**
 
 To integrate the differerent logging and montioring servies we need to connect Istio's Mixer with Stackdriver and Antho Service Mesh. Mixer supports a variety of adapters to integrate with different systems.
 
@@ -296,16 +297,4 @@ Restart Mixer
     sleep 10
     kubectl scale deployment istio-telemetry --replicas=1 -n istio-system
 
-
-
-gcloud beta container clusters create istio-cluster --zone \
-    australia-southeast1-a \
-    --enable-ip-alias \
-    --machine-type n1-standard-4 \
-    --identity-namespace=${IDNS} \
-    --enable-stackdriver-kubernetes \
-    --subnetwork=default \
-    --cluster-secondary-range-name=pods \
-    --services-ipv4-cidr=10.120.0.0/20 \
-    --labels csm=
-    --max-nodes=3
+**12. ** 
