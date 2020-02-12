@@ -42,6 +42,8 @@ Then you will see a terminal window open up at the bottom of your console tab.
 or, you can enter the below into your cloud-shell session.
 
 .. code-block:: bash
+    :emphasize-lines: 17
+    :linenos:
 
     GCP_PROJECT=$(gcloud config list --format "value(core.project)")
     export IDNS=${GCP_PROJECT}.svc.id.goog
@@ -66,6 +68,7 @@ or, you can enter the below into your cloud-shell session.
 **03. Once you have this up and running we need to enable access to a few API's in GCP**
 
 .. code-block:: bash
+    :linenos:
 
     gcloud services enable \
         cloudresourcemanager.googleapis.com \
@@ -83,6 +86,7 @@ or, you can enter the below into your cloud-shell session.
 **04. Download and prepare to deploy Istio to the new cluster**
 
 .. code-block:: bash
+    :linenos:
 
     curl -L https://istio.io/downloadIstio | sh -
 
@@ -103,6 +107,8 @@ Note: ``Current latest version is 1.4.3.``
 **05. Create an alias using kubectx to make it easier to refer to the istio cluster**
 
 .. code-block:: bash
+    :linenos:
+
     GCP_PROJECT=$(gcloud config list --format "value(core.project)")
     kubectx istio-cluster=gke_${GCP_PROJECT}_australia-southeast1_istio-cluster
 
@@ -114,6 +120,7 @@ Run the following commands to configure Workload Identity for the default namesp
 running our application in.  
 
 .. code-block:: bash
+    :linenos:
 
     gcloud iam service-accounts create microservices-demo
     gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
@@ -143,6 +150,7 @@ More information on Istio profiles is available on the Istio_ site.
 .. _Istio: https://istio.io/docs/setup/additional-setup/config-profiles/
 
 .. code-block:: bash
+    :linenos:
 
     istioctl manifest apply --set profile=demo \
     --set values.global.mtls.auto=true  \
@@ -158,6 +166,7 @@ without worrying about destination rule.
 **08. Enable Istio injection to your namespace**
 
 .. code-block:: bash
+    :linenos:
 
     kubectl label namespace default istio-injection=enabled
 
@@ -171,6 +180,7 @@ guide from Google's git_ page.
 As per below we will clone the hipster app repo, enable the Google Container Registry and auth GCR with docker.
 
 .. code-block:: bash
+    :linenos:
 
     git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
     cd microservices-demo
@@ -183,6 +193,7 @@ More information available at here_
 .. _here: https://github.com/GoogleContainerTools/skaffold
 
 .. code-block:: bash
+    :linenos:
 
     skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]
 
@@ -192,6 +203,7 @@ Next up we need to connect to our kubernetes cluster via cloud shell.
 We should see all of our pods running with the below command. Take note we should see 2/2 underneath "ready". This indicates that Envoy has been deployed.
 
 .. code-block:: bash
+    :linenos:
 
     gcloud container clusters get-credentials istio-cluster --zone australia-southeast1-a --project [PROJECT_ID]
     kubectl get pods
@@ -204,6 +216,7 @@ Let's take a moment to consider what we have deployed so far. We have a working 
 the front end load balancer. We can obtain the front end LB IP with the below command.
 
 .. code-block:: bash
+    :linenos:
 
     kubectl get svc
 
@@ -214,6 +227,7 @@ This is not however making use of Isio's ingress capabilities.
 **10. Enable Istio for Ingress on our new Hipster Shop application**
 
 .. code-block:: bash
+    :linenos:
 
     kubectl apply -f istio-manifests
 
@@ -224,8 +238,13 @@ for our load generator. The ``whitelist-egress-googleapis.yaml`` file configures
 To obtain the external Service Mesh ingress IP. Run the following and browse to the IP in your browser.
 
 .. code-block:: bash   
+    :linenos:
 
     kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+
+.. image:: _images/hipster-ingress.png
+    :align: center
+    :width: 400
 
 At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
 For my learnings I will focuss on the later.
@@ -239,6 +258,7 @@ To integrate the differerent logging and montioring servies we need to connect I
 First up, Stackdriver
 
 .. code-block:: bash
+    :linenos:
 
     CLUSTER_ZONE=australia-southeast1-a
     CLUSTER_NAME=istio-cluster
@@ -251,6 +271,7 @@ First up, Stackdriver
 We also need to enable Mixer's pod service account to access Stackdriver. So let's create a service account.
 
 .. code-block:: bash
+    :linenos:
 
     gcloud iam service-accounts create istio-mixer \
     --display-name istio-mixer --project ${GCP_PROJECT}
@@ -258,6 +279,7 @@ We also need to enable Mixer's pod service account to access Stackdriver. So let
 Grant the service account permissions to sent telemetry to Stackdriver
 
 .. code-block:: bash
+    :linenos:
 
     GCP_PROJECT=$(gcloud config list --format "value(core.project)")
     gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
@@ -275,6 +297,7 @@ Grant the service account permissions to sent telemetry to Stackdriver
 Now we need to bind the Kube Service Account that Mixer uses to the ``istio-mixer`` service account we just created.
 
 .. code-block:: bash
+    :linenos:
 
     gcloud iam service-accounts add-iam-policy-binding \
         --role roles/iam.workloadIdentityUser \
@@ -284,6 +307,7 @@ Now we need to bind the Kube Service Account that Mixer uses to the ``istio-mixe
 Ensure that Mixer's service account is using the GSA by adding a workload identity annotation.
 
 .. code-block:: bash
+    :linenos:
 
     kubectl annotate serviceaccount \
    --namespace istio-system istio-mixer-service-account \
@@ -292,9 +316,10 @@ Ensure that Mixer's service account is using the GSA by adding a workload identi
 Restart Mixer
 
 .. code-block:: bash
+    :linenos:
 
     kubectl scale deployment istio-telemetry --replicas=0 -n istio-system
     sleep 10
     kubectl scale deployment istio-telemetry --replicas=1 -n istio-system
 
-**12. ** 
+**12.** 
