@@ -206,7 +206,7 @@ the front end load balancer. We can obtain the front end LB IP with the below co
 
     kubectl get svc -n demo
 
-Take a look got the `LoadBalancer` IP next to the `frontend-external` service name.
+Take a look got the ``LoadBalancer`` IP next to the ``frontend-external`` service name.
 You will be able to browse to this IP and access the shopfront. (assuming you're working with GKE and not a local environment with NodePort etc)
 This is not however making use of Isio's ingress capabilities.
 
@@ -217,8 +217,8 @@ Now let's enable Istio for Ingress.
     kubectl apply -n demo -f istio-manifests
 
 If you take a look inside the istio-manifests directory you will find 3 .yaml files.
-The `frontend-gateway.yaml` file configures the Istio ingress gateway. The `frontend.yaml` defines a virtual service 
-for our load generator. The `whitelist-egress-googleapis.yaml` file configures what external hosts can be accessed from within the mesh.
+The ``frontend-gateway.yaml`` file configures the Istio ingress gateway. The ``frontend.yaml`` defines a virtual service 
+for our load generator. The ``whitelist-egress-googleapis.yaml`` file configures what external hosts can be accessed from within the mesh.
 
 
 At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
@@ -266,5 +266,26 @@ Grant the service account permissions to sent telemetry to Stackdriver
     --member=serviceAccount:istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com \
         --role=roles/monitoring.metricWriter
 
+Now we need to bind the Kube Service Account that Mixer uses to the ``istio-mixer`` service account we just created.
 
+.. code-block:: bash
 
+    gcloud iam service-accounts add-iam-policy-binding \
+        --role roles/iam.workloadIdentityUser \
+        --member "serviceAccount:${GCP_PROJECT}.svc.id.goog[istio-system/istio-mixer-service-account]" \
+        istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com
+
+Ensure that Mixer's service account is using the GSA by adding a workload identity annotation.
+
+.. code-block:: bash
+
+    kubectl annotate serviceaccount \
+   --namespace istio-system istio-mixer-service-account \
+      iam.gke.io/gcp-service-account=istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com
+
+Restart Mixer
+
+.. code-block:: bash
+    kubectl scale deployment istio-telemetry --replicas=0 -n istio-system
+    sleep 10
+    kubectl scale deployment istio-telemetry --replicas=1 -n istio-system
