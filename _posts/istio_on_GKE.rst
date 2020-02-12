@@ -197,5 +197,74 @@ We should see all of our pods running with the below command. Take note we shoul
 
 
 .. image:: _images/k-get-pods.png
-    :width: 400
+    :width: 500
+
+Let's take a moment to consider what we have deployed so far. We have a working hipster shop that is accessable via 
+the front end load balancer. We can obtain the front end LB IP with the below command.
+
+.. code-block:: bash
+
+    kubectl get svc -n demo
+
+Take a look got the `LoadBalancer` IP next to the `frontend-external` service name.
+You will be able to browse to this IP and access the shopfront. (assuming you're working with GKE and not a local environment with NodePort etc)
+This is not however making use of Isio's ingress capabilities.
+
+Now let's enable Istio for Ingress.
+
+.. code-block:: bash
+
+    kubectl apply -n demo -f istio-manifests
+
+If you take a look inside the istio-manifests directory you will find 3 .yaml files.
+The `frontend-gateway.yaml` file configures the Istio ingress gateway. The `frontend.yaml` defines a virtual service 
+for our load generator. The `whitelist-egress-googleapis.yaml` file configures what external hosts can be accessed from within the mesh.
+
+
+At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
+For my learnings I will focuss on the later.
+
+Therefore we need to enable Istio Telemetry. This will help us understand two key things regarding application. Security and health. Pretty important right!
+
+10. Enable Mixer to share Telemety data to Stackdriver.
+
+To integrate the differerent logging and montioring servies we need to connect Istio's Mixer with Stackdriver and Antho Service Mesh. Mixer supports a variety of adapters to integrate with different systems.
+
+First up, Stackdriver
+
+.. code-block:: bash
+
+    CLUSTER_ZONE=australia-southeast1
+    CLUSTER_NAME=istio-cluster
+    ACCOUNT=$(gcloud config get-value account)
+    GCP_PROJECT=$(gcloud config list --format "value(core.project)")
+    MESH_ID="${GCP_PROJECT}_${CLUSTER_ZONE}_${CLUSTER_NAME}"
+    gsutil cat gs://csm-artifacts/stackdriver/stackdriver.istio.csm_beta.yaml \
+    | sed 's@<mesh_uid>@'${MESH_ID}@g | kubectl apply -f -
+
+We also need to enable Mizer's pod service account to access Stackdriver. So let's create a service account.
+
+.. code-block:: bash
+
+    gcloud iam service-accounts create istio-mixer \
+    --display-name istio-mixer --project ${GCP_PROJECT}
+
+Grant the service account permissions to sent telemetry to Stackdriver
+
+.. code-block:: bash
+
+    GCP_PROJECT=$(gcloud config list --format "value(core.project)")
+    gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com \
+    --role=roles/contextgraph.asserter
+
+    gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com \
+        --role=roles/logging.logWriter
+
+    gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:istio-mixer@${GCP_PROJECT}.iam.gserviceaccount.com \
+        --role=roles/monitoring.metricWriter
+
+
 
