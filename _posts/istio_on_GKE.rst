@@ -51,7 +51,7 @@ or, you can enter the below into your cloud-shell session.
         --add-secondary-ranges pods=10.60.0.0/14 
 
     gcloud beta container clusters create istio-cluster --zone \
-        australia-southeast1 \
+        australia-southeast1-a \
         --enable-ip-alias \
         --machine-type n1-standard-4 \
         --identity-namespace=${IDNS} \
@@ -60,6 +60,7 @@ or, you can enter the below into your cloud-shell session.
         --cluster-secondary-range-name=pods \
         --services-ipv4-cidr=10.120.0.0/20 \
         --labels csm=
+        --max-nodes=3
 
 
 03. Once you have this up and running we need to enable access to a few API's in GCP.
@@ -155,12 +156,9 @@ without worrying about destination rule.
 
 08. Enable Istio injection to your namespace.
 
-I'll create a demo namespace for the purposes of this post.
-
 .. code-block:: bash
 
-    kubectl create namespace demo
-    kubectl label namespace demo istio-injection=enabled
+    kubectl label namespace default istio-injection=enabled
 
 09. Deploy Hipster Shop Demo application
 
@@ -185,15 +183,17 @@ More information available at here_
 
 .. code-block:: bash
 
-    skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]
+    skaffold run -n demo -p gcb --default-repo=gcr.io/[PROJECT_ID]
 
 The above code will build the images, tag these images, push to GCR and deploy the hipster shop images to GKE.
 
+Next up we need to connect to our kubernetes cluster via cloud shell.
 We should see all of our pods running with the below command. Take note we should see 2/2 underneath "ready". This indicates that Envoy has been deployed.
 
 .. code-block:: bash
 
-    kubectl get pods -n demo
+    gcloud container clusters get-credentials istio-cluster --zone australia-southeast1-a --project [PROJECT_ID]
+    kubectl get pods
 
 
 .. image:: _images/k-get-pods.png
@@ -204,7 +204,7 @@ the front end load balancer. We can obtain the front end LB IP with the below co
 
 .. code-block:: bash
 
-    kubectl get svc -n demo
+    kubectl get svc
 
 Take a look got the ``LoadBalancer`` IP next to the ``frontend-external`` service name.
 You will be able to browse to this IP and access the shopfront. (assuming you're working with GKE and not a local environment with NodePort etc)
@@ -214,12 +214,17 @@ Now let's enable Istio for Ingress.
 
 .. code-block:: bash
 
-    kubectl apply -n demo -f istio-manifests
+    kubectl apply -f istio-manifests
 
 If you take a look inside the istio-manifests directory you will find 3 .yaml files.
 The ``frontend-gateway.yaml`` file configures the Istio ingress gateway. The ``frontend.yaml`` defines a virtual service 
 for our load generator. The ``whitelist-egress-googleapis.yaml`` file configures what external hosts can be accessed from within the mesh.
 
+To obtain the external Service Mesh ingress IP. Run the following and browse to the IP in your browser.
+
+.. code-block:: bash   
+
+    kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 
 At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
 For my learnings I will focuss on the later.
@@ -234,7 +239,7 @@ First up, Stackdriver
 
 .. code-block:: bash
 
-    CLUSTER_ZONE=australia-southeast1
+    CLUSTER_ZONE=australia-southeast1-a
     CLUSTER_NAME=istio-cluster
     ACCOUNT=$(gcloud config get-value account)
     GCP_PROJECT=$(gcloud config list --format "value(core.project)")
@@ -242,7 +247,7 @@ First up, Stackdriver
     gsutil cat gs://csm-artifacts/stackdriver/stackdriver.istio.csm_beta.yaml \
     | sed 's@<mesh_uid>@'${MESH_ID}@g | kubectl apply -f -
 
-We also need to enable Mizer's pod service account to access Stackdriver. So let's create a service account.
+We also need to enable Mixer's pod service account to access Stackdriver. So let's create a service account.
 
 .. code-block:: bash
 
@@ -286,6 +291,21 @@ Ensure that Mixer's service account is using the GSA by adding a workload identi
 Restart Mixer
 
 .. code-block:: bash
+
     kubectl scale deployment istio-telemetry --replicas=0 -n istio-system
     sleep 10
     kubectl scale deployment istio-telemetry --replicas=1 -n istio-system
+
+
+
+gcloud beta container clusters create istio-cluster --zone \
+    australia-southeast1-a \
+    --enable-ip-alias \
+    --machine-type n1-standard-4 \
+    --identity-namespace=${IDNS} \
+    --enable-stackdriver-kubernetes \
+    --subnetwork=default \
+    --cluster-secondary-range-name=pods \
+    --services-ipv4-cidr=10.120.0.0/20 \
+    --labels csm=
+    --max-nodes=3
