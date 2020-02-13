@@ -7,12 +7,12 @@ Installing Istio Service Mesh on GKE.
     :width: 400
 
 Over the past few years we've been hearing and talking about a Service Mesh. To me this technology 
-certainly can solve many problems in both digitel natives and traditional enterprise alike. I'm very much
+certainly can solve many problems in both digital natives and traditional enterprise alike. I'm very much
 enjoying watching the SM space mature and really form a value statement that many architects I speak to are
 looking for. If we say that kubernetes has won. Then we will continue to see larger/more complex kubernetes 
 deployments which will further drive the need for a Service Mesh.
 At a high level there are a few capabilities a Service Mesh will provide. 
-Offload certificate mangement (mTLS) from the developers.
+Offload certificate management (mTLS) from the developers.
 Provide the SRE/Ops teams with insight into service performance/latency and to further abstract services from the network.
 
 
@@ -20,7 +20,7 @@ Objective
 ---------
 The intent of this post is to share the installation process to get the OSS version of Istio Service Mesh 
 on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
-ASM will provide the capability to build your mesh across many clusters and clouds. ASM is just one componant of Anthos that has been built
+ASM will provide the capability to build your mesh across many clusters and clouds. ASM is just one component of Anthos that has been built
 to help our customers build and manage highly scalable systems across multiple cloud and also on-premise DC's.
 
 More information on Anthos_
@@ -219,7 +219,7 @@ We should see all of our pods running with the below command. Take note we shoul
 .. image:: _images/k-get-pods.png
     :width: 500
 
-Let's take a moment to consider what we have deployed so far. We have a working hipster shop that is accessable via 
+Let's take a moment to consider what we have deployed so far. We have a working hipster shop that is accessible via 
 the front end load balancer. We can obtain the front end LB IP with the below command.
 
 .. code-block:: bash
@@ -227,9 +227,9 @@ the front end load balancer. We can obtain the front end LB IP with the below co
 
     kubectl get svc
 
-Take a look got the ``LoadBalancer`` IP next to the ``frontend-external`` service name.
+Take a look at the ``LoadBalancer`` IP next to the ``frontend-external`` service name.
 You will be able to browse to this IP and access the shopfront. (assuming you're working with GKE and not a local environment with NodePort etc)
-This is not however making use of Isio's ingress capabilities.
+This is not making use of Isio's ingress capabilities.
 
 **10. Enable Istio for Ingress on our new Hipster Shop application**
 
@@ -253,14 +253,14 @@ To obtain the external Service Mesh ingress IP. Run the following and browse to 
     :align: center
     :width: 450
 
-At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
-For my learnings I will focuss on the later.
+At this point we need to make a decision. Learn more about Prometheus and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
+For my learnings I will focus on the later.
 
 Therefore we need to enable Istio Telemetry. This will help us understand two key things regarding application. Security and health. Pretty important right!
 
 **11. Enable Mixer to share Telemety data to Stackdriver**
 
-To integrate the differerent logging and montioring servies we need to connect Istio's Mixer with Stackdriver and Antho Service Mesh. Mixer supports a variety of adapters to integrate with different systems.
+To integrate the different logging and monitoring services we need to connect Istio's Mixer with Stackdriver and Antho Service Mesh. Mixer supports a variety of adapters to integrate with different systems.
 
 First up, Stackdriver
 
@@ -371,7 +371,7 @@ you can adopt mutual TLS by only configuring authentication policy without worry
 Hopefully that helps you get started with deploying OSS Istio to GKE.
 Worst case, this is just some documentation that I can refer back to when needed :)
 
-Next, I'll be explooring *Canary* deployments with Istio followed by deploying Google's implementation of ASM.
+Next, I'll be exploring *Canary* deployments with Istio followed by deploying Google's implementation of ASM.
 
 BD
 
