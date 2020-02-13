@@ -41,6 +41,9 @@ Then you will see a terminal window open up at the bottom of your console tab.
 .. _GKE: https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster
 or, you can enter the below into your cloud-shell session.
 
+.. note:: 
+    I've highlighted the ``csm`` label. This is important while Anthos Service Mesh or ASM for short is in Beta as it allows access to the UI.
+
 .. code-block:: bash
     :emphasize-lines: 17
     :linenos:
@@ -244,7 +247,7 @@ To obtain the external Service Mesh ingress IP. Run the following and browse to 
 
 .. image:: _images/hipster-ingress.png
     :align: center
-    :width: 400
+    :width: 450
 
 At this point we need to make a decision. Learn more about Promethius and Grafana or integrate out mesh with Stackdriver and Anthos Service Mesh.
 For my learnings I will focuss on the later.
@@ -322,4 +325,39 @@ Restart Mixer
     sleep 10
     kubectl scale deployment istio-telemetry --replicas=1 -n istio-system
 
-**12.** 
+**12. Explore some ASM UI features via the GCP Console UI**
+
+From the console select the *Navigate* button and scroll down. We should see Anthos Service Mesh available.
+
+.. image:: _images/nav-menu.png
+    :align: center
+    :width: 300
+
+Once we brows to the ASM menu we should see our services as per below. 
+Note we can see the requests/sec, error rate and so on. That is due to the earlier configuration we did with Stackdriver.
+
+.. image:: _images/asm.png
+    :align: center
+    :width: 450
+
+Next up, let's check to see if we're enforcing mTLS between services. 
+From the ASM landing page select *recommendationservice*.
+
+.. image:: _images/rec-service.png
+    :align: right
+    :width: 300
+
+From here you can define SLO's and explore the health, metrics and so on down the left-hand *navigate* menu. Select *Connected Services*.
+
+.. image:: _images/asm-nav2.png
+    :align: left
+    :width: 300
+
+Here we can see a green padlock for the *Inbound* Frontend services accessing the *recommendationservice*. 
+This means that mTLS has been configured without our development teams needing to thing about this. 
+I recall some time back having conversations on how we can encrypt east-west comms on legacy apps without needing to open up the application code. 
+During this time we were exploring how the network can solve such challenges. But when you think about the overhead and reliance on physical ASIC's to implement 
+such capabilities scale became a very real concern.
+
+There is a lot more we can do with the security side of things. 
+
