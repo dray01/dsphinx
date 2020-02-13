@@ -20,8 +20,12 @@ Objective
 ---------
 The intent of this post is to share the installation process to get the OSS version of Istio Service Mesh 
 on our GKE cluster. This is more of an enablement and prep before I go ahead and test out Anthos SM or ASM which it will be known as. 
-ASM will provide the capability to build your mesh across many clusters and clouds.
+ASM will provide the capability to build your mesh across many clusters and clouds. ASM is just one componant of Anthos that has been built
+to help our customers build and manage highly scalable systems across multiple cloud and also on-premise DC's.
 
+More information on Anthos_
+
+.. _Anthos: https://cloud.google.com/anthos
 
 Steps
 ---------
@@ -330,7 +334,7 @@ Restart Mixer
 From the console select the *Navigate* button and scroll down. We should see Anthos Service Mesh available.
 
 .. image:: _images/nav-menu.png
-    :align: center
+    :align: left
     :width: 300
 
 Once we brows to the ASM menu we should see our services as per below. 
@@ -338,7 +342,7 @@ Note we can see the requests/sec, error rate and so on. That is due to the earli
 
 .. image:: _images/asm.png
     :align: center
-    :width: 450
+    :width: 550
 
 Next up, let's check to see if we're enforcing mTLS between services. 
 From the ASM landing page select *recommendationservice*.
@@ -350,7 +354,7 @@ From the ASM landing page select *recommendationservice*.
 From here you can define SLO's and explore the health, metrics and so on down the left-hand *navigate* menu. Select *Connected Services*.
 
 .. image:: _images/asm-nav2.png
-    :align: left
+    :align: right
     :width: 300
 
 Here we can see a green padlock for the *Inbound* Frontend services accessing the *recommendationservice*. 
@@ -359,5 +363,15 @@ I recall some time back having conversations on how we can encrypt east-west com
 During this time we were exploring how the network can solve such challenges. But when you think about the overhead and reliance on physical ASIC's to implement 
 such capabilities scale became a very real concern.
 
-There is a lot more we can do with the security side of things. 
+There is a lot more we can do with the security side of things. I'd suggest exploring the Istio documentation_ . 
+It's a great resource. We've configured Istio auto mutual TLS feature, 
+you can adopt mutual TLS by only configuring authentication policy without worrying about destination rule.
+
+.. _documentation: https://istio.io/docs/tasks/security/
+
+Hopefully that helps you get started with deploying OSS Istio to GKE.
+Worst case, this is just some documentation that I can refer back to when needed :)
+
+Next, I'll be explooring *Canary* deployments with Istio.
+
 
