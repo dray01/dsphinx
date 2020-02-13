@@ -334,7 +334,6 @@ Restart Mixer
 From the console select the *Navigate* button and scroll down. We should see Anthos Service Mesh available.
 
 .. image:: _images/nav-menu.png
-    :align: left
     :width: 200
 
 Once we browse to the ASM menu we should see our services as per below. 
@@ -347,13 +346,11 @@ Next up, let's check to see if we're enforcing mTLS between services.
 From the ASM landing page select *recommendationservice*.
 
 .. image:: _images/rec-service.png
-    :width: 300
 
 From here you can define SLO's and explore the health, metrics and so on down the left-hand *navigate* menu. 
 Select *Connected Services*.
 
 .. image:: _images/asm-nav2.png
-    :width: 500
 
 Here we can see a green padlock for the *Inbound* Frontend services accessing the *recommendationservice*. 
 This means that mTLS has been configured without our development teams needing to thing about this. 
