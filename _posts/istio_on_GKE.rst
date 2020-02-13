@@ -3,7 +3,7 @@ Installing Istio Service Mesh on GKE.
 ======================================
 
 .. image:: _images/istio.png
-    :align: left
+    :align: right
     :width: 400
 
 Over the past few years we've been hearing and talking about a Service Mesh. To me this technology 
@@ -335,30 +335,31 @@ From the console select the *Navigate* button and scroll down. We should see Ant
 
 .. image:: _images/nav-menu.png
     :align: left
-    :width: 300
+    :width: 200
 
-Once we brows to the ASM menu we should see our services as per below. 
+Once we browse to the ASM menu we should see our services as per below. 
 Note we can see the requests/sec, error rate and so on. That is due to the earlier configuration we did with Stackdriver.
 
 .. image:: _images/asm.png
     :align: center
-    :width: 550
 
 Next up, let's check to see if we're enforcing mTLS between services. 
 From the ASM landing page select *recommendationservice*.
 
 .. image:: _images/rec-service.png
-    :align: right
     :width: 300
 
-From here you can define SLO's and explore the health, metrics and so on down the left-hand *navigate* menu. Select *Connected Services*.
+From here you can define SLO's and explore the health, metrics and so on down the left-hand *navigate* menu. 
+Select *Connected Services*.
 
 .. image:: _images/asm-nav2.png
-    :align: right
-    :width: 300
+    :width: 500
 
 Here we can see a green padlock for the *Inbound* Frontend services accessing the *recommendationservice*. 
 This means that mTLS has been configured without our development teams needing to thing about this. 
+
+.. image:: _images/green-padlock.png
+
 I recall some time back having conversations on how we can encrypt east-west comms on legacy apps without needing to open up the application code. 
 During this time we were exploring how the network can solve such challenges. But when you think about the overhead and reliance on physical ASIC's to implement 
 such capabilities scale became a very real concern.
