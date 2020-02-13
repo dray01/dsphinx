@@ -361,9 +361,9 @@ I recall some time back having conversations on how we can encrypt east-west com
 During this time we were exploring how the network can solve such challenges. But when you think about the overhead and reliance on physical ASIC's to implement 
 such capabilities scale became a very real concern.
 
-There is a lot more we can do with the security side of things. I'd suggest exploring Istio's documentation_ 
+There is a lot more we can do with the security side of things. I'd suggest exploring Istio's security_ documentation
 
-.. _documentation: https://istio.io/docs/tasks/security/
+.. _security: https://istio.io/docs/tasks/security/
 
 It's a great resource. We've configured Istio auto mutual TLS feature, 
 you can adopt mutual TLS by only configuring authentication policy without worrying about destination rule.
