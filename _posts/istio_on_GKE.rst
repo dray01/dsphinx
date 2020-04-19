@@ -376,3 +376,12 @@ Next, I'll be exploring *Canary* deployments with Istio followed by deploying Go
 BD
 
 
+helm template install/kubernetes/helm/istio \
+    --name istio --namespace istio-system \
+    --set mixer.telemetry.autoscaleEnabled=false,\
+    mixer.telemetry.sessionAffinityEnabled=true,\
+    mixer.telemetry.replicaCount=1, \
+    global.enableTracing=false,\
+    prometheus.enabled=false,\
+    sidecarInjectorWebhook.rewriteAppHTTPProbe=true \
+    | kubectl apply -f -

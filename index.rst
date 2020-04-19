@@ -16,7 +16,7 @@ Welcome to cloudbits!
    :hidden:
 
    _posts/cloud_run_build.rst
-   _posts/istio_on_GKE.rst
+   _posts/codelab_Anthos_sample.rst
 
 The Site....
 ===============
