@@ -69,13 +69,9 @@ Steps
 
 01. Sign up for $300 UDS credit at https://cloud.google.com
 
-02. Get started with the codelab 
+02. Get started with the codelab https://codelabs.developers.google.com/codelabs/anthos-sample-deployment/#0
 
-https://codelabs.developers.google.com/codelabs/anthos-sample-deployment/#0
-
-03. Deploy the Anthos Sample Deployment
-
-https://console.cloud.google.com/marketplace/details/click-to-deploy-images/anthos-sample-deployment
+03. Deploy the Anthos Sample Deployment https://console.cloud.google.com/marketplace/details/click-to-deploy-images/anthos-sample-deployment
 
 04. Get cracking on the codelab!
 
