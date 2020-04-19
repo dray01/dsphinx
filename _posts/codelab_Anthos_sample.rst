@@ -97,7 +97,9 @@ Inside, you’ll find information on the following:
 
 - Deploying enterprise-grade, out-of-the-box integrated solutions from an ecosystem of partners
 
+Download the Anthos_ whitepaper
 
+.. _Anthos: https://inthecloud.withgoogle.com/content-anthos/dl-cd.html
 
 BD
 
