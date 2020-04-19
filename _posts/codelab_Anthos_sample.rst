@@ -8,18 +8,18 @@ I am super excited to start this post. We've seen some great progress in terms o
 I'm lucky enough to be working with both the product teams and Google's customers gaining new insights everyday on how to successfully take 
 these platforms from pilots to production. I'm delighted to share details of the platform with the wider community. 
 
-For those who are not familiar, Anthos is a software platfrom available from Google. This platform enables Google's customers to build secure, scalable 
-solutions that can be places on-prem, in GCP or other clouds. Giving customers the abaility to place services where it makes sense whilst gaining a consistent way 
+For those who are not familiar, Anthos is a software platform available from Google. This platform enables Google's customers to build secure, scalable 
+solutions that can be placed on-prem, in GCP or other clouds. Giving customers the ability to place services where it makes sense whilst gaining a consistent way 
 to design, deploy, secure, operate and scale no matter the location.
 It's unique as it brings together a number of projects from the OSS community (which Google actively contributes heavily)
 into a supported, enterprise ready platform to architect, deploy and operate distributed applications in GCP, on-prem and other clouds. This also provides 
-our customers with choice. As the fundamentals are build on OSS this provides a way to build an enterprise platform whilst vendor reducing lock in.
+our customers with choice. As the fundamentals are built on OSS this provides a way to build an enterprise platform whilst vendor reducing lock in.
 
 The key items that are of focus are:
 
 1. Container Management
 
-*Fundamentally this is the base layer of infrastructure abstraction and container schedueling/orchestration. Through Google's lens this means GKE.
+*Fundamentally this is the base layer of infrastructure abstraction and container scheduling/orchestration. Through Google's lens this means GKE.
 Did you know you can run GKE on-prem and manage centrally from GCP? Kinda neat right!*
 
 2. Service Management
