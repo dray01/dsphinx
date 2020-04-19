@@ -2,7 +2,7 @@
 Hands on with Anthos
 ======================================
 .. image:: _images/anthos.png
-    :align: middle
+    :align: center
     :width: 400
 I am super excited to start this post. We've seen some great progress in terms of features and stabiltiy of Anthos.
 I'm lucky enough to be working with both the product teams and Google's customers. This give me a unique perspective in many ways.
@@ -40,8 +40,8 @@ and enforce guardrails into your kubernetes platform. Quick example. Ensuring th
  
 
 .. image:: _images/anthos-any-cloud.png
-    :align: middle
-    :width: 400
+    :align: center
+    :width: 500
 
 Now let's get started.
 
