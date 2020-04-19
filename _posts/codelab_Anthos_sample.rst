@@ -3,7 +3,7 @@ Hands on with Anthos
 ======================================
 .. image:: _images/anthos.png
     :align: center
-    :width: 400
+    :width: 300
 I am super excited to start this post. We've seen some great progress in terms of features and stabiltiy of Anthos.
 I'm lucky enough to be working with both the product teams and Google's customers. This give me a unique perspective in many ways.
 So, i'm delighted to share this with the wider community. 
