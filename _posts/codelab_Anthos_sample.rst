@@ -1,7 +1,9 @@
 ======================================
 Hands on with Anthos
 ======================================
-
+.. image:: _images/anthos.png
+    :align: middle
+    :width: 400
 I am super excited to start this post. We've seen some great progress in terms of features and stabiltiy of Anthos.
 I'm lucky enough to be working with both the product teams and Google's customers. This give me a unique perspective in many ways.
 So, i'm delighted to share this with the wider community. 
@@ -24,7 +26,7 @@ This helps simplify the developer efforts by handling the insertion and lifecycl
 and provide the application owners a simple way to deliver canary deployments.* 
 
 3. App Development and Deployment
-*This is an interesting space. Through the Google lens this means bringinig Knative (think serverless containers. More on that later), 
+*This is an interesting space. Through the Google lens this means bringinig Knative (think serverless containers. This blog actually runs on Cloud which is the productised version o Knative), 
 a marketplace and CD tools into the platform*
 
 4. Operations Management
@@ -38,7 +40,7 @@ and enforce guardrails into your kubernetes platform. Quick example. Ensuring th
  
 
 .. image:: _images/anthos-any-cloud.png
-    :align: right
+    :align: middle
     :width: 400
 
 Now let's get started.
